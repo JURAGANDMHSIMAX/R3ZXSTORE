@@ -30,8 +30,8 @@ jobs:
           unzip -q gradle.zip
           echo "$PWD/gradle-8.7/bin" >> "$GITHUB_PATH"
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - - name: Setup Android SDK
+  uses: android-actions/setup-android@v3.2.2
 
       - name: Install Android packages
         run: |
