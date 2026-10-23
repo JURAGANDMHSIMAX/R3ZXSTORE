@@ -3,10 +3,17 @@ name: Build R3ZX STORE APK
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/build-apk.yml"
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,16 +24,24 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Install Gradle
+        run: |
+          curl -L https://services.gradle.org/distributions/gradle-8.7-bin.zip -o gradle.zip
+          unzip -q gradle.zip
+          echo "$PWD/gradle-8.7/bin" >> "$GITHUB_PATH"
+
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build APK
+      - name: Install Android packages
         run: |
-          mkdir -p app/src/main/assets
-          cp index.html app/src/main/assets/index.html
-          echo "sdk.dir=$ANDROID_HOME" > local.properties
-          gradle init --type basic --dsl groovy --project-name R3ZXSTORE --project-dir .
+          yes | sdkmanager --licenses || true
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Create Android project
+        run: |
           mkdir -p app/src/main/java/com/r3zx/store
+
           cat > settings.gradle <<'EOF'
           pluginManagement {
               repositories {
@@ -45,18 +60,22 @@ jobs:
           rootProject.name = 'R3ZXSTORE'
           include ':app'
           EOF
+
           cat > build.gradle <<'EOF'
           plugins {
               id 'com.android.application' version '8.6.1' apply false
           }
           EOF
+
           cat > app/build.gradle <<'EOF'
           plugins {
               id 'com.android.application'
           }
+
           android {
               namespace 'com.r3zx.store'
               compileSdk 35
+
               defaultConfig {
                   applicationId 'com.r3zx.store'
                   minSdk 23
@@ -66,10 +85,17 @@ jobs:
               }
           }
           EOF
+
           cat > app/src/main/AndroidManifest.xml <<'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-              <application android:theme="@android:style/Theme.Material.Light.NoActionBar" android:label="R3ZX STORE">
-                  <activity android:name=".MainActivity" android:exported="true">
+              <uses-permission android:name="android.permission.INTERNET"/>
+              <application
+                  android:theme="@android:style/Theme.Material.Light.NoActionBar"
+                  android:label="R3ZX STORE"
+                  android:usesCleartextTraffic="false">
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true">
                       <intent-filter>
                           <action android:name="android.intent.action.MAIN"/>
                           <category android:name="android.intent.category.LAUNCHER"/>
@@ -78,28 +104,47 @@ jobs:
               </application>
           </manifest>
           EOF
+
           cat > app/src/main/java/com/r3zx/store/MainActivity.java <<'EOF'
           package com.r3zx.store;
+
           import android.app.Activity;
           import android.os.Bundle;
           import android.webkit.WebView;
           import android.webkit.WebViewClient;
+          import android.webkit.WebSettings;
+
           public class MainActivity extends Activity {
+              @Override
               public void onCreate(Bundle savedInstanceState) {
                   super.onCreate(savedInstanceState);
+
                   WebView web = new WebView(this);
-                  web.getSettings().setJavaScriptEnabled(true);
+                  WebSettings settings = web.getSettings();
+                  settings.setJavaScriptEnabled(true);
+                  settings.setDomStorageEnabled(true);
                   web.setWebViewClient(new WebViewClient());
+
                   setContentView(web);
-                  web.loadUrl("file:///android_asset/index.html");
+                  web.loadUrl("https://juragandmhsimax.github.io/R3ZXSTORE/");
+              }
+
+              @Override
+              public void onBackPressed() {
+                  WebView web = (WebView) findViewById(android.R.id.content)
+                      .getRootView();
+                  super.onBackPressed();
               }
           }
           EOF
-          gradle --version
-          gradle assembleDebug --stacktrace
+
+      - name: Build APK
+        run: gradle --no-daemon assembleDebug
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: R3ZX-STORE-APK
           path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
           
