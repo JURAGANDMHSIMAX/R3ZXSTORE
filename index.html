@@ -7,152 +7,161 @@
 <title>R3ZX STORE | HSI MAX</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;color:white;background:linear-gradient(#20234c,#bb7991,#ffb58b,#152b4b);background-attachment:fixed;min-height:100vh}
-header{padding:18px 5%;background:#10152cdd;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
-h1,h2,p{margin-top:0}
-.logo{font-size:23px;font-weight:900}.logo span{color:#70f6ff}
-a{color:#8cf7ff;text-decoration:none}
-button,.btn{background:linear-gradient(100deg,#77f6ff,#8daaff);border:0;border-radius:10px;padding:12px;color:#07132c;font-weight:bold;cursor:pointer;display:inline-block}
-.hero{text-align:center;padding:70px 15px 40px}
-.hero h1{font-size:clamp(38px,8vw,65px);margin-bottom:12px}
-.hero h1 span{color:#82f7ff}
-.hero p{line-height:1.6}
-.wrap{width:min(1000px,92%);margin:auto}
-.social{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0}
-.social a{padding:12px;border:1px solid #ffffff55;border-radius:10px;background:#111b3acc}
-h2{text-align:center}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;padding:15px 0 40px}
-.card{background:#101a38e8;border:1px solid #8befff66;border-radius:18px;padding:20px;text-align:center;position:relative;overflow:hidden;box-shadow:0 10px 28px #07132c55}
-.gem{font-size:58px;display:block;animation:float 2s infinite ease-in-out;filter:drop-shadow(0 0 12px #6df4ff)}
-@keyframes float{50%{transform:translateY(-8px) rotate(7deg)}}
-.card:before,.card:after{content:"✦";position:absolute;color:#8af8ff;font-size:22px;animation:shoot 1.5s infinite;opacity:0}
-.card:before{left:25%;bottom:28%}.card:after{right:25%;bottom:30%;animation-delay:.7s}
-@keyframes shoot{0%{transform:translateY(20px);opacity:0}30%{opacity:1}100%{transform:translateY(-100px);opacity:0}}
-.price{font-size:25px;font-weight:bold;margin:15px}
-.card button{width:100%}
-.info{background:#101a38dd;padding:22px;border-radius:16px;margin-bottom:20px;line-height:1.7}
-footer{text-align:center;padding:25px;background:#090f24dd}
-#rain{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:4}
-.diamond{position:absolute;top:-30px;color:#a7fbff;text-shadow:0 0 12px #6df4ff;animation:fall linear forwards}
-@keyframes fall{to{transform:translate(var(--sway),110vh) rotate(500deg);opacity:0}}
-.modal{display:none;position:fixed;inset:0;background:#05091ddd;z-index:10;align-items:center;justify-content:center;padding:15px}
-.modal.show{display:flex}
-.dialog{width:min(420px,100%);padding:24px;border-radius:18px;background:#131e40;border:1px solid #8befff}
-input{width:100%;padding:12px;border:1px solid #8befff66;border-radius:9px;background:#08132c;color:white;margin:7px 0 15px}
-.dialog button{width:100%;margin-top:10px}
-#welcome{position:fixed;inset:0;z-index:20;background:#080d20eF;display:flex;align-items:center;justify-content:center;padding:20px}
-.welcome-box{background:#172344;border:1px solid #7bf6ff;padding:30px;border-radius:20px;text-align:center;max-width:400px}
-#welcome.hide{display:none}
-@media(max-width:480px){header{justify-content:center}.hero{padding-top:45px}}
+:root{--blue:#00d9ff;--purple:#b15cff;--gold:#ffbf32}
+body{margin:0;background:#030719;color:white;font-family:Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 20% 20%,#123b75,transparent 45%),radial-gradient(ellipse at 80% 30%,#351052,transparent 45%),linear-gradient(#030719,#08132d)}
+header{padding:18px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1475a966;background:#030719cc;position:sticky;top:0;z-index:5}
+.logo{font-size:24px;font-weight:900;color:var(--blue);text-shadow:0 0 16px var(--blue);animation:logoIn 4s infinite}
+@keyframes logoIn{0%{opacity:0;transform:translateX(-60px)}15%,75%{opacity:1;transform:translateX(0)}95%,100%{opacity:0;transform:translateX(60px)}}
+header a{color:white;text-decoration:none}
+.tag{font-size:11px;color:#b8c7e8}
+.hero{min-height:490px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:50px 15px;overflow:hidden;background:linear-gradient(180deg,#06152c88,#030719ee)}
+.village{position:absolute;inset:0;opacity:.35;background:linear-gradient(transparent 60%,#020615),repeating-linear-gradient(90deg,transparent 0 35px,#25365a 36px 39px,transparent 40px 70px)}
+.mountain{position:absolute;bottom:0;width:100%;height:130px;background:#101d38;clip-path:polygon(0 70%,12% 35%,23% 65%,40% 10%,56% 60%,72% 22%,87% 56%,100% 20%,100% 100%,0 100%)}
+.character{position:absolute;bottom:15px;width:155px;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:fight 2.5s ease-in-out infinite;z-index:1}
+.naruto{left:2%;filter:drop-shadow(0 0 18px #ffb21c)}
+.sasuke{right:2%;filter:drop-shadow(0 0 20px #a25cff);animation-delay:.7s}
+.head{width:70px;height:65px;border-radius:48% 48% 38% 38%;background:linear-gradient(120deg,#ffd6aa,#c78058);border-top:17px solid #ffbf32;position:relative;z-index:2}
+.sasuke .head{border-top-color:#171729}
+.head:after{content:"";position:absolute;top:5px;left:15px;width:40px;height:8px;background:#a6b6ca;border-radius:3px}
+.body{width:90px;height:100px;margin-top:-2px;border-radius:20px 20px 8px 8px;background:linear-gradient(90deg,#f27822,#ffb43c,#8c3713);position:relative}
+.sasuke .body{background:linear-gradient(90deg,#191c36,#4b4e70,#111328)}
+.body:before{content:"";position:absolute;top:22px;left:-18px;width:32px;height:65px;border-radius:18px;background:inherit;transform:rotate(28deg)}
+.body:after{content:"";position:absolute;top:22px;right:-18px;width:32px;height:65px;border-radius:18px;background:inherit;transform:rotate(-28deg)}
+@keyframes fight{0%,100%{transform:translateY(0) rotate(-2deg)}35%{transform:translateY(-13px) rotate(4deg)}50%{transform:translateY(-5px) rotate(-5deg)}70%{transform:translateY(-15px) rotate(2deg)}}
+.jutsu{position:absolute;top:22%;left:5px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,#fff 0,#58eaff 10%,#008cff 38%,transparent 72%);box-shadow:0 0 25px #00cfff,0 0 55px #007bff;animation:power 1.2s infinite;z-index:3}
+.sasuke .jutsu{left:auto;right:0;background:radial-gradient(circle,#fff 0,#d8a0ff 10%,#9b36ff 38%,transparent 72%);box-shadow:0 0 25px #a849ff,0 0 55px #762aff}
+@keyframes power{0%,100%{transform:scale(.75) rotate(0);opacity:.7}50%{transform:scale(1.2) rotate(180deg);opacity:1}}
+.spark{position:absolute;width:5px;height:70px;background:linear-gradient(transparent,#ffe36b,#fff,transparent);box-shadow:0 0 12px #ffcf43;animation:lightning .5s infinite;transform:rotate(35deg)}
+.sasuke .spark{background:linear-gradient(transparent,#b56aff,#fff,transparent);box-shadow:0 0 12px #a94bff}
+@keyframes lightning{0%,100%{opacity:.15;transform:scaleY(.5) rotate(35deg)}50%{opacity:1;transform:scaleY(1.3) rotate(-35deg)}}
+.hero-copy{position:relative;z-index:2;max-width:480px;padding:20px;background:#0307197a;border:1px solid #31caff44;border-radius:24px;backdrop-filter:blur(5px)}
+h1{font-size:clamp(36px,9vw,66px);line-height:1;margin:12px 0;text-shadow:0 0 25px #00bfff;animation:titlePop 2s infinite alternate}
+@keyframes titlePop{from{transform:scale(.96)}to{transform:scale(1.04)}}
+h1 span{color:#fff}h1 small{display:block;font-size:22px;color:var(--blue);margin-top:12px}
+.cta,.btn{display:inline-block;border:0;border-radius:12px;padding:13px 20px;background:linear-gradient(100deg,#087bff,#00d9ff);color:#001226;font-weight:900;text-decoration:none;cursor:pointer;box-shadow:0 0 20px #00bfff66}
+section.card{margin:22px auto;padding:22px;width:min(94%,760px);background:#071329eF;border:1px solid #159bff88;border-radius:20px;box-shadow:0 0 30px #007dff18}
+h2{margin-top:0;color:var(--blue)}
+label{display:block;margin:15px 0 7px;font-size:14px}
+input{width:100%;padding:14px;border:1px solid #1c9dff;border-radius:10px;background:#020b1d;color:white;font-size:16px}
+.quick,.payments{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.quick button,.pay{flex:1;min-width:90px;padding:12px;border:1px solid #168bff;border-radius:10px;background:#0a2142;color:white;cursor:pointer}
+.pay.selected{border:2px solid #00edff;background:#103b5d;box-shadow:0 0 16px #00d9ff55}
+.summary{margin-top:18px;padding:15px;background:#020a1b;border-radius:12px}
+.row{display:flex;justify-content:space-between;gap:10px;margin:10px 0}
+.row b{color:#45e8ff}
+.bonus{color:#ffd75c;background:#382609;padding:12px;border-radius:10px;margin-top:12px}
+.btn{width:100%;margin-top:15px;font-size:15px}
+.note{font-size:12px;color:#aebbd6;line-height:1.6}
+footer{text-align:center;padding:25px;color:#9aaaca;font-size:12px}
+@media(max-width:550px){.character{transform:scale(.76);transform-origin:bottom center;width:120px}.naruto{left:-12px}.sasuke{right:-12px}.hero{min-height:470px}.hero-copy{padding:13px;margin:0 3px}.logo{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
 </head>
 <body>
-<div id="rain"></div>
 <header>
- <div class="logo">R3ZX <span>STORE</span></div>
- <div class="social" style="margin:0">
-  <a href="https://www.tiktok.com/@r4_kroco?_r=1&_t=ZS-9AlchAm0FxF" target="_blank">TikTok ↗</a>
-  <a href="https://whatsapp.com/channel/0029VbDQPecAO7RM7WDrJq1w" target="_blank">Saluran WA ↗</a>
- </div>
+<a href="#home" class="logo">⚡ R3ZXSTORE</a>
+<span class="tag">TOP UP HSI MAX</span>
 </header>
-<main class="wrap">
- <section class="hero">
-  <p>✦ TOP UP HSI MAX ✦</p>
-  <h1>ISI DM.<br><span>GASKEUN!</span></h1>
-  <p>Top up diamond HSI MAX dengan mudah.<br>Pilih paket, isi nama, lalu pesan melalui WhatsApp.</p>
-  <a class="btn" href="#paket">PILIH PAKET ↓</a>
- </section>
- <h2 id="paket">💎 PAKET DIAMOND</h2>
- <div class="products" id="products"></div>
- <section class="info">
-  <h2>📋 Cara Order</h2>
-  1. Pilih paket diamond.<br>
-  2. Isi nama pembeli dan jumlah paket.<br>
-  3. Lanjutkan pesanan melalui WhatsApp admin.<br><br>
-  <b>Pembayaran:</b> DANA dan QRIS — konfirmasi detailnya ke admin.
- </section>
- <section class="info" style="text-align:center">
-  <h2>Ikuti R3ZX STORE</h2>
-  <div class="social">
-   <a href="https://www.tiktok.com/@r4_kroco?_r=1&_t=ZS-9AlchAm0FxF" target="_blank">🎵 TikTok @r4_kroco</a>
-   <a href="https://whatsapp.com/channel/0029VbDQPecAO7RM7WDrJq1w" target="_blank">📢 Saluran WhatsApp</a>
-   <a href="https://wa.me/6288985249702" target="_blank">💬 Chat Admin</a>
-  </div>
- </section>
-</main>
-<footer>© <span id="year"></span> R3ZX STORE • HSI MAX</footer>
 
-<div class="modal" id="order">
- <div class="dialog">
-  <h2 id="chosen">Order DM</h2>
-  <form id="form">
-   <label>Nama pembeli</label>
-   <input id="buyer" required maxlength="60" placeholder="Nama kamu">
-   <label>Jumlah paket</label>
-   <input id="qty" type="number" min="1" max="99" step="1" inputmode="numeric" placeholder="Masukkan jumlah" required>
-   <p>Total: <b id="total">Rp0</b></p>
-   <p style="font-size:12px">Pembayaran DANA / QRIS dikonfirmasi oleh admin.</p>
-   <button type="submit">Lanjutkan ke WhatsApp</button>
-   <button type="button" id="close" style="background:#394565;color:white">Batal</button>
-  </form>
- </div>
+<section class="hero" id="home">
+<div class="village"></div><div class="mountain"></div>
+<div class="character naruto" aria-label="Karakter ninja dengan energi biru dan api kuning">
+<div class="jutsu"></div><i class="spark" style="left:8px;top:45px"></i><i class="spark" style="left:90px;top:15px"></i>
+<div class="head"></div><div class="body"></div>
 </div>
-<div id="welcome">
- <div class="welcome-box">
-  <div class="logo">R3ZX <span>STORE</span></div>
-  <p>Selamat datang di toko top up HSI MAX!</p>
-  <button id="enter">MASUK KE STORE ✦</button>
- </div>
+<div class="character sasuke" aria-label="Karakter ninja dengan petir ungu">
+<div class="jutsu"></div><i class="spark" style="right:4px;top:25px"></i><i class="spark" style="right:90px;top:60px"></i>
+<div class="head"></div><div class="body"></div>
 </div>
+<div class="hero-copy">
+<div class="tag">✦ SELAMAT DATANG DI DUNIA HSI MAX ✦</div>
+<h1><span>R3ZXSTORE</span><small>HSI MAX</small></h1>
+<p>Top up DM mudah, cepat, dan praktis!</p>
+<a href="#custom" class="cta">MASUK KE TOKO ➜</a>
+</div>
+</section>
+
+<section class="card" id="custom">
+<h2>💎 Top Up DM Custom</h2>
+<p class="note">Masukkan jumlah DM. Minimal pembelian 1.000 DM.</p>
+<label for="dm">Jumlah DM</label>
+<input id="dm" type="number" min="1000" step="1" inputmode="numeric" placeholder="Masukkan jumlah DM">
+<div class="quick">
+<button data-dm="1000">1.000</button><button data-dm="5000">5.000</button><button data-dm="10000">10.000</button>
+</div>
+<div class="summary">
+<div class="row"><span>Total DM</span><b id="totalDm">0 DM</b></div>
+<div class="row"><span>Total Harga</span><b id="totalPrice">Rp0</b></div>
+<div class="row"><span>Bonus</span><b id="bonus">0 DM</b></div>
+<div class="bonus">🎁 Bonus 250 DM untuk transaksi di atas Rp50.000.</div>
+</div>
+<label for="buyer">Nama pembeli</label>
+<input id="buyer" maxlength="60" placeholder="Nama kamu">
+<label>Pilih metode pembayaran</label>
+<div class="payments">
+<button type="button" class="pay selected" data-pay="DANA">🔵 DANA</button>
+<button type="button" class="pay" data-pay="QRIS">▦ QRIS</button>
+</div>
+<p class="note" id="payHint">Metode pembayaran: DANA</p>
+<button class="btn" id="order">LANJUTKAN ORDER VIA WHATSAPP</button>
+<p class="note">Admin akan mengirim detail pembayaran setelah pesanan dikonfirmasi.</p>
+</section>
+
+<section class="card">
+<h2>🎁 Voucher Promo</h2>
+<p>Belanja di atas <b>Rp50.000</b> dalam satu transaksi dan dapatkan bonus <b>250 DM</b> otomatis.</p>
+</section>
+
+<section class="card">
+<h2>⚡ Cara Order</h2>
+<p>1. Masukkan jumlah DM minimal 1.000.</p>
+<p>2. Isi nama pembeli dan pilih DANA atau QRIS.</p>
+<p>3. Tekan tombol order untuk mengirim rincian ke WhatsApp admin.</p>
+</section>
+
+<footer>R3ZX STORE • HSI MAX<br>Top Up Mudah • Harga Transparan</footer>
+
 <script>
-const data=[
- {dm:1000,price:5000,label:"Starter Pack"},
- {dm:12000,price:50000,label:"Paket Hemat"},
- {dm:25000,price:100000,label:"Paket Favorit"},
- {dm:55000,price:200000,label:"Big Pack"}
-];
-const rp=n=>"Rp"+n.toLocaleString("id-ID");
-const products=document.getElementById("products");
-let selected=null;
-data.forEach((p,i)=>{
- const c=document.createElement("article");c.className="card";
- c.innerHTML=`<span class="gem">💎</span><p>${p.label}</p><h3>${p.dm.toLocaleString("id-ID")} DM</h3><div class="price">${rp(p.price)}</div><button type="button">PILIH PAKET</button>`;
- c.querySelector("button").onclick=()=>{
-  selected=p;document.getElementById("chosen").textContent=p.dm.toLocaleString("id-ID")+" DM — "+p.label;
-  document.getElementById("buyer").value="";document.getElementById("qty").value="";
-  document.getElementById("total").textContent=rp(0);
-  document.getElementById("order").classList.add("show");
- };
- products.appendChild(c);
+const dm=document.getElementById('dm');
+let payment='DANA';
+const rupiah=n=>'Rp'+Math.round(n).toLocaleString('id-ID');
+function update(){
+ const raw=dm.value;
+ const valid=raw!==''&&Number.isInteger(Number(raw))&&Number(raw)>=1000;
+ const amount=valid?Number(raw):0;
+ const price=amount*5;
+ const bonus=price>50000?250:0;
+ document.getElementById('totalDm').textContent=amount.toLocaleString('id-ID')+' DM';
+ document.getElementById('totalPrice').textContent=rupiah(price);
+ document.getElementById('bonus').textContent=bonus+' DM';
+ dm.setCustomValidity(raw!==''&&!valid?'Minimal 1.000 DM dan harus bilangan bulat':'');
+ return {amount,price,bonus,valid};
+}
+dm.addEventListener('input',update);
+document.querySelectorAll('[data-dm]').forEach(b=>b.addEventListener('click',()=>{dm.value=b.dataset.dm;update()}));
+document.querySelectorAll('[data-pay]').forEach(b=>b.addEventListener('click',()=>{
+ payment=b.dataset.pay;
+ document.querySelectorAll('[data-pay]').forEach(x=>x.classList.toggle('selected',x===b));
+ document.getElementById('payHint').textContent='Metode pembayaran: '+payment;
+}));
+document.getElementById('order').addEventListener('click',()=>{
+ const o=update(),name=document.getElementById('buyer').value.trim();
+ if(!o.valid){alert('Minimal pembelian 1.000 DM.');dm.focus();return}
+ if(!name){alert('Masukkan nama pembeli dulu.');document.getElementById('buyer').focus();return}
+ const message=[
+ 'Halo Admin R3ZX STORE, saya mau order DM HSI MAX.',
+ 'Nama: '+name,
+ 'Jumlah DM: '+o.amount.toLocaleString('id-ID')+' DM',
+ 'Harga: '+rupiah(o.price),
+ 'Bonus: '+o.bonus+' DM',
+ 'Total DM termasuk bonus: '+(o.amount+o.bonus).toLocaleString('id-ID')+' DM',
+ 'Metode pembayaran: '+payment,
+ 'Mohon kirim detail pembayaran.'
+ ].join('\n');
+ window.open('https://wa.me/6288985249702?text='+encodeURIComponent(message),'_blank');
 });
-const qty=document.getElementById("qty");
-function updateTotal(){
- const n=qty.value===""?0:Number(qty.value);
- document.getElementById("total").textContent=selected&&Number.isInteger(n)&&n>=1&&n<=99?rp(selected.price*n):rp(0);
-}
-qty.addEventListener("input",updateTotal);
-document.getElementById("close").onclick=()=>document.getElementById("order").classList.remove("show");
-document.getElementById("form").onsubmit=e=>{
- e.preventDefault();if(!selected)return;
- const name=document.getElementById("buyer").value.trim(),n=Number(qty.value);
- if(!name||!Number.isInteger(n)||n<1||n>99)return;
- const msg=`Halo admin R3ZX STORE! Saya mau order HSI MAX.\nNama pembeli: ${name}\nPaket: ${selected.dm} DM\nJumlah paket: ${n}\nTotal: ${rp(selected.price*n)}\nPembayaran: DANA / QRIS`;
- window.open("https://wa.me/6288985249702?text="+encodeURIComponent(msg),"_blank");
- document.getElementById("order").classList.remove("show");
-};
-document.getElementById("enter").onclick=()=>document.getElementById("welcome").classList.add("hide");
-document.getElementById("year").textContent=new Date().getFullYear();
-const rain=document.getElementById("rain");
-if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
- setInterval(()=>{
-  if(rain.childElementCount>=20)return;
-  const d=document.createElement("span");d.className="diamond";d.textContent=Math.random()>.5?"◆":"✦";
-  d.style.left=Math.random()*100+"vw";d.style.fontSize=8+Math.random()*16+"px";
-  d.style.animationDuration=5+Math.random()*6+"s";
-  d.style.setProperty("--sway",(Math.random()*100-50)+"px");
-  rain.appendChild(d);d.addEventListener("animationend",()=>d.remove(),{once:true});
- },450);
-}
+update();
 </script>
 </body>
 </html>
